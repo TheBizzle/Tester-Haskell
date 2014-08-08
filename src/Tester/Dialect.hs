@@ -2,17 +2,17 @@ module Tester.Dialect(CellBox, FlagCell(..), FlagCells(..), ToggleFlag(..), andA
 
   data ToggleFlag
     = Talkative
-    | StackTrace deriving (Show)
+    | StackTrace deriving (Eq, Show)
 
   data FlagCell
     = ToggleCell { flag :: ToggleFlag }
     | DontRun    { num :: Int }
-    | Run        { num :: Int } deriving (Show)
+    | Run        { num :: Int } deriving (Eq, Show)
 
   data FlagCells
     = FlagCells {
         cells :: [FlagCell]
-      } deriving (Show)
+      } deriving (Eq, Show)
 
   notRunning :: Int -> FlagCell
   notRunning x = DontRun x
