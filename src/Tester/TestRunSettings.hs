@@ -1,9 +1,9 @@
 module Tester.TestRunSettings(Settings, cellsToSettings) where
 
-  import Control.Arrow((>>>))
+  import Control.Arrow
 
-  import Data.List(sort)
-  import Data.Set(empty, insert, Set)
+  import Data.List hiding (insert)
+  import Data.Set  hiding (foldr)
 
   import Tester.Dialect
 
