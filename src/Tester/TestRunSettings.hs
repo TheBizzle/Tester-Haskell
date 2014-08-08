@@ -28,7 +28,7 @@ module Tester.TestRunSettings(Settings, cellsToSettings) where
       newNums = insert num nums
 
   optimize :: [FlagCell] -> [OptCell]
-  optimize = sort >>> (foldr f [])
+  optimize = sort >>> foldr f []
     where
       f (ToggleCell Talkative)  acc@(OTalkative : t)      = acc
       f (ToggleCell Talkative)  acc                       = OTalkative  : acc
