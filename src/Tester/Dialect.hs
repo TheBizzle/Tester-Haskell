@@ -1,4 +1,4 @@
-module Tester.Dialect(CellBox, FlagCell, ToggleFlag, andAlso, butAlso, excludingTo, notRunning, runningTo) where
+module Tester.Dialect(CellBox, FlagCell(..), FlagCells(..), ToggleFlag(..), andAlso, butAlso, excludingTo, notRunning, runningTo) where
 
   data ToggleFlag
     = Talkative
