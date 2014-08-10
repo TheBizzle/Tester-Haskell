@@ -1,4 +1,4 @@
-module Tester.TestRunSettings(Settings, cellsToSettings) where
+module Tester.TestRunSettings(Settings(..), cellsToSettings) where
 
   import Control.Arrow
 
