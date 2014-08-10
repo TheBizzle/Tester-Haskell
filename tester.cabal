@@ -22,3 +22,4 @@ library
     base       >= 4.6,
     containers >= 0.5
   GHC-Options: -Wall
+               -fno-warn-name-shadowing
