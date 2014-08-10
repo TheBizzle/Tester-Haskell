@@ -30,9 +30,9 @@ module Tester.TestRunSettings(Settings, cellsToSettings) where
   optimize :: [FlagCell] -> [OptCell]
   optimize = sort >>> foldr f []
     where
-      f (ToggleCell Talkative)  acc@(OTalkative : t)      = acc
+      f (ToggleCell Talkative)  acc@(OTalkative : _)      = acc
       f (ToggleCell Talkative)  acc                       = OTalkative  : acc
-      f (ToggleCell StackTrace) acc@(OStackTrace : t)     = acc
+      f (ToggleCell StackTrace) acc@(OStackTrace : _)     = acc
       f (ToggleCell StackTrace) acc                       = OStackTrace : acc
       f (Run        num)        acc                       = (ORun num)  : acc
       f (DontRun    num)        ((ORun h) : t) | h == num = t
