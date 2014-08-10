@@ -10,28 +10,24 @@ module Tester.TestRunSettings(Settings, cellsToSettings) where
   data Settings
     = Settings {
       testNums       :: Set Int,
-      isTalkative    :: Bool,
       isStackTracing :: Bool
     }
 
   cellsToSettings :: FlagCells -> Settings
   cellsToSettings (FlagCells cells) = foldr constructSettings baseSettings optimizedCells
     where
-      baseSettings   = (Settings empty False False)
+      baseSettings   = (Settings empty False)
       optimizedCells = optimize cells
 
   constructSettings :: OptCell -> Settings -> Settings
-  constructSettings OTalkative  (Settings nums _       tracing) = Settings nums    True    tracing
-  constructSettings OStackTrace (Settings nums talking _)       = Settings nums    talking True
-  constructSettings (ORun num)  (Settings nums talking tracing) = Settings newNums talking tracing
+  constructSettings OStackTrace (Settings nums _)       = Settings nums    True
+  constructSettings (ORun num)  (Settings nums tracing) = Settings newNums tracing
     where
       newNums = insert num nums
 
   optimize :: [FlagCell] -> [OptCell]
   optimize = sort >>> foldr f []
     where
-      f (ToggleCell Talkative)  acc@(OTalkative : _)      = acc
-      f (ToggleCell Talkative)  acc                       = OTalkative  : acc
       f (ToggleCell StackTrace) acc@(OStackTrace : _)     = acc
       f (ToggleCell StackTrace) acc                       = OStackTrace : acc
       f (Run        num)        acc                       = (ORun num)  : acc
@@ -39,6 +35,5 @@ module Tester.TestRunSettings(Settings, cellsToSettings) where
       f (DontRun    _)          acc                       = acc
 
   data OptCell
-    = OTalkative
-    | OStackTrace
+    = OStackTrace
     | ORun { num :: Int }

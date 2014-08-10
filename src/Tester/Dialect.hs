@@ -1,8 +1,7 @@
 module Tester.Dialect(CellBox, FlagCell(..), FlagCells(..), ToggleFlag(..), andAlso, butAlso, excludingTo, notRunning, runningTo) where
 
   data ToggleFlag
-    = Talkative
-    | StackTrace deriving (Eq, Show)
+    = StackTrace deriving (Eq, Show)
 
   data FlagCell
     = ToggleCell { flag :: ToggleFlag }
@@ -39,11 +38,10 @@ module Tester.Dialect(CellBox, FlagCell(..), FlagCells(..), ToggleFlag(..), andA
   instance CellBox ToggleFlag where
     unbox flag = unbox (ToggleCell flag)
 
-  -- Example: [DontRun 0, Run 1, DontRun 2, Run 2, Run 3, DontRun 5, StackTrace, Talkative]
+  -- Example: [DontRun 0, Run 1, DontRun 2, Run 2, Run 3, DontRun 5, StackTrace]
   instance Ord FlagCell where
     (Run        a)         <= (Run        b)          = a <= b
     (DontRun    a)         <= (DontRun    b)          = a <= b
-    (ToggleCell Talkative) <= (ToggleCell StackTrace) = False
     (ToggleCell _)         <= (ToggleCell _)          = True
     (ToggleCell _)         <= (DontRun    _)          = False
     (ToggleCell _)         <= (Run        _)          = False
