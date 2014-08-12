@@ -1,4 +1,4 @@
-module Tester.Suite(executeSuite, Suite, Result) where
+module Tester.Suite(Result, runTests, Suite) where
 
   import Control.Arrow
 
@@ -7,6 +7,9 @@ module Tester.Suite(executeSuite, Suite, Result) where
   import Data.Map           hiding (toList)
   import Data.Set
   import Data.Validation
+
+  import Tester.Dialect
+  import Tester.RunSettings
 
   type Result f s = Validation (NonEmpty f) s
 
@@ -18,9 +21,10 @@ module Tester.Suite(executeSuite, Suite, Result) where
       succToStr  :: c -> String
     }
 
-  executeSuite :: (Suite a b c) -> (Set Int) -> [String]
-  executeSuite (Suite testMap runTest failsToStr succToStr) numSet = strs
+  runTests :: FlagCells -> (Suite a b c) -> IO ()
+  runTests cells (Suite testMap runTest failsToStr succToStr) = mapM_ putStrLn strs
     where
-      numsToRun = toList numSet
+      (Settings testNumSet isStackTracing) = cellsToSettings cells
+      numsToRun = toList testNumSet
       results   = fmap ((testMap!) >>> runTest) numsToRun
       strs      = fmap (bifoldMap failsToStr succToStr) results
