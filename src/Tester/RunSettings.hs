@@ -11,7 +11,7 @@ module Tester.RunSettings(Settings(..), cellsToSettings) where
     = Settings {
       testNums       :: Set Int,
       isStackTracing :: Bool
-    }
+    } deriving (Eq, Show)
 
   cellsToSettings :: FlagCells -> Settings
   cellsToSettings (FlagCells cells) = foldr constructSettings baseSettings optimizedCells
