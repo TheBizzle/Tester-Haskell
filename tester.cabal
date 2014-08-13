@@ -26,6 +26,7 @@ library
     containers >= 0.5,
     semigroups >= 0.9,
     validation >= 0.3
+  GHC-Options:
+    -Wall
+    -fno-warn-name-shadowing
 
-  GHC-Options: -Wall
-               -fno-warn-name-shadowing
