@@ -1,4 +1,4 @@
-module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), andAlso, butAlso, excludingTo, notRunning, runningTo) where
+module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), andAlso, butAlso, excludingTo, runningTo) where
 
   data ToggleFlag
     = StackTrace deriving (Eq, Show)
@@ -12,9 +12,6 @@ module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), 
     = FlagCells {
         cells :: [FlagCell]
       } deriving (Eq, Show)
-
-  notRunning :: Int -> FlagCell
-  notRunning x = DontRun x
 
   runningTo :: Int -> Int -> FlagCells
   runningTo x y = FlagCells (fmap (\z -> Run z) [x..y])
