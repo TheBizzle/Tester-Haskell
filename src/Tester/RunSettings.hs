@@ -13,11 +13,13 @@ module Tester.RunSettings(Settings(..), cellsToSettings) where
       isStackTracing :: Bool
     } deriving (Eq, Show)
 
-  cellsToSettings :: FlagCells -> Settings
-  cellsToSettings (FlagCells cells) = foldr constructSettings baseSettings optimizedCells
+  a |> f = f a
+
+  cellsToSettings :: (CellBox x) => x -> Settings
+  cellsToSettings cellBox = foldr constructSettings baseSettings optimizedCells
     where
       baseSettings   = (Settings empty False)
-      optimizedCells = optimize cells
+      optimizedCells = cellBox |> (unbox >>> optimize)
 
   constructSettings :: OptCell -> Settings -> Settings
   constructSettings OStackTrace (Settings nums _)       = Settings nums    True
