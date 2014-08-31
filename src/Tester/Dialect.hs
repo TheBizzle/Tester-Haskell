@@ -14,13 +14,13 @@ module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), 
       } deriving (Eq, Show)
 
   runningTo :: Int -> Int -> FlagCells
-  runningTo x y = FlagCells (fmap (\z -> Run z) [x..y])
+  runningTo x y = FlagCells $ fmap Run [x..y]
 
   excludingTo :: Int -> Int -> FlagCells
-  excludingTo x y = FlagCells (fmap (\z -> DontRun z) [x..y])
+  excludingTo x y = FlagCells $ fmap DontRun [x..y]
 
   andAlso, butAlso :: (CellBox a, CellBox b) => a -> b -> FlagCells
-  andAlso x y = FlagCells ((unbox x) ++ (unbox y))
+  andAlso x y = FlagCells $ (unbox x) ++ (unbox y)
   butAlso = andAlso
 
   class CellBox x where
@@ -37,15 +37,15 @@ module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), 
 
   -- Example: [DontRun 0, Run 1, DontRun 2, Run 2, Run 3, DontRun 5, StackTrace]
   instance Ord FlagCell where
-    (Run        a)         <= (Run        b)          = a <= b
-    (DontRun    a)         <= (DontRun    b)          = a <= b
-    (ToggleCell _)         <= (ToggleCell _)          = True
-    (ToggleCell _)         <= (DontRun    _)          = False
-    (ToggleCell _)         <= (Run        _)          = False
-    (DontRun    _)         <= (ToggleCell _)          = True
-    (Run        _)         <= (ToggleCell _)          = True
-    (Run        a)         <= (DontRun    b)          = a < b
-    (DontRun    a)         <= (Run        b)          = a <= b
+    (Run        a) <= (Run        b) = a <= b
+    (DontRun    a) <= (DontRun    b) = a <= b
+    (ToggleCell _) <= (ToggleCell _) = True
+    (ToggleCell _) <= (DontRun    _) = False
+    (ToggleCell _) <= (Run        _) = False
+    (DontRun    _) <= (ToggleCell _) = True
+    (Run        _) <= (ToggleCell _) = True
+    (Run        a) <= (DontRun    b) = a < b
+    (DontRun    a) <= (Run        b) = a <= b
 
   infixl 6 `runningTo`,`excludingTo`
   infixl 2 `andAlso`,`butAlso`
