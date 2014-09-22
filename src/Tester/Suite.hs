@@ -25,7 +25,7 @@ module Tester.Suite(Result, runTests, Suite(..), unsafeRunTests) where
   data Suite a b c
     = Suite {
       testMap    :: Map Int a,
-      runTest    :: a -> (Result b c),
+      runTest    :: a -> Result b c,
       failsToStr :: NonEmpty b -> String,
       succToStr  :: c -> String
     }
