@@ -37,23 +37,20 @@ module Tester.Suite(Result, runTests, Suite(..), unsafeRunTests) where
     mappend _                  x@(TestFailure _)  = x
     mappend _                  _                  = TestSuccess
 
-  runTests :: (Show b) => FlagCells -> (Suite a b c) -> [TestResult]
-  runTests = generateResults >>> (fmap resultToTR .)
+  runTests :: FlagCells -> (Suite a b c) -> [TestResult]
+  runTests c s@(Suite _ _ failsToStr _) = fmap (resultToTR failsToStr) (generateResults c s)
 
-  unsafeRunTests :: (Show b) => FlagCells -> (Suite a b c) -> [TestResult]
+  unsafeRunTests :: FlagCells -> (Suite a b c) -> [TestResult]
   unsafeRunTests c s@(Suite _ _ failsToStr succToStr) = seq (unsafePerformIO evilIO) testResults
     where
       results     = generateResults c s
-      testResults = fmap resultToTR results
+      testResults = fmap (resultToTR failsToStr) results
       strs        = fmap (bifoldMap failsToStr succToStr) results
       evilIO      = mapM_ putStrLn strs
 
-  generateResults :: (Show b) => FlagCells -> (Suite a b c) -> [Result b c]
+  generateResults :: FlagCells -> (Suite a b c) -> [Result b c]
   generateResults cells (Suite testMap runTest _ _) =
     cells |> (cellsToSettings >>> testNums >>> Set.toList >>> (fmap ((testMap!) >>> runTest)))
 
-  resultToTR :: (Show a) => Result a b -> TestResult
-  resultToTR = bifoldMap failToFailR (\_ -> TestSuccess)
-    where
-      failToFailR :: (Show f) => NonEmpty f -> TestResult
-      failToFailR = (NEL.toList >>> (fmap show) >>> (foldr mappend mempty) >>> TestFailure)
+  resultToTR :: (NonEmpty a -> String)-> Result a b -> TestResult
+  resultToTR fToStr = bifoldMap (\nel -> TestFailure $ fToStr nel) (\_ -> TestSuccess)
