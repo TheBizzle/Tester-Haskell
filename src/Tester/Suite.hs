@@ -32,10 +32,10 @@ module Tester.Suite(Result, runTests, Suite(..), unsafeRunTests) where
 
   instance Monoid TestResult where
     mempty = TestSuccess
-    mappend   (TestFailure m1)   (TestFailure m2) = TestFailure $ m1 ++ m2
+    mappend   (TestFailure m1)   (TestFailure m2) = TestFailure $ m1 `mappend` m2
     mappend x@(TestFailure _)  _                  = x
     mappend _                  x@(TestFailure _)  = x
-    mappend _                  _                  = TestSuccess
+    mappend _                  _                  = mempty
 
   runTests :: FlagCells -> (Suite a b c) -> [TestResult]
   runTests c s@(Suite _ _ failsToStr _) = fmap (resultToTR failsToStr) (generateResults c s)
