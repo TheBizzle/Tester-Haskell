@@ -1,4 +1,4 @@
-module Tester.Suite(Result, runTests, Suite(..), unsafeRunTests) where
+module Tester.Suite(Result, runTests, Suite(..), TestResult(..), unsafeRunTests) where
 
   import Control.Arrow
 
