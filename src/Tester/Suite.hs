@@ -53,4 +53,4 @@ module Tester.Suite(Result, runTests, Suite(..), TestResult(..), unsafeRunTests)
     cells |> (cellsToSettings >>> testNums >>> Set.toList >>> (fmap ((testMap!) >>> runTest)))
 
   resultToTR :: (NonEmpty a -> String)-> Result a b -> TestResult
-  resultToTR fToStr = bifoldMap (\nel -> TestFailure $ fToStr nel) (\_ -> TestSuccess)
+  resultToTR fToStr = bifoldMap (\nel -> TestFailure $ fToStr nel) (const TestSuccess)
