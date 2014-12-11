@@ -1,18 +1,19 @@
 module Tester.Suite(Result, runTests, Suite(..), TestResult(..), unsafeRunTests) where
 
-import Control.Arrow
+import Control.Arrow((>>>))
 
-import Data.Bifoldable
-import Data.List.NonEmpty as NEL hiding (map)
-import Data.Map                  hiding (map, foldr)
-import Data.Monoid
-import Data.Set           as Set hiding (map, foldr)
-import Data.Validation
+import Data.Bifoldable(bifoldMap)
+import Data.List.NonEmpty(NonEmpty)
+import Data.Map((!), Map)
+import Data.Monoid(Monoid(mappend, mempty))
+import Data.Validation(Validation)
 
-import System.IO.Unsafe
+import Data.Set as Set
 
-import Tester.Dialect
-import Tester.RunSettings
+import System.IO.Unsafe(unsafePerformIO)
+
+import Tester.Dialect(FlagCells)
+import Tester.RunSettings(cellsToSettings, testNums)
 
 a |> f = f a
 

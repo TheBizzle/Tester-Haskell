@@ -1,11 +1,11 @@
 module Tester.RunSettings(Settings(..), cellsToSettings) where
 
-import Control.Arrow
+import Control.Arrow((>>>))
 
-import Data.List hiding (insert)
-import Data.Set  hiding (foldr)
+import Data.List(sort)
+import Data.Set(empty, insert, Set)
 
-import Tester.Dialect
+import Tester.Dialect(CellBox, FlagCell(DontRun, Run, ToggleCell), ToggleFlag(StackTrace), unbox)
 
 data Settings
   = Settings {

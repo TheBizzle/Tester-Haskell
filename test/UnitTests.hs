@@ -1,15 +1,15 @@
 module UnitTests where
 
-import Test.Framework.Providers.API as API
-import Test.Framework.Providers.HUnit
-import Test.HUnit
+import Test.Framework.Providers.API(Test, testGroup)
+import Test.Framework.Providers.HUnit(testCase)
+import Test.HUnit((@?=))
 
-import Control.Arrow
+import Control.Arrow((>>>))
 
-import Data.Set
+import Data.Set(empty, fromList, insert, Set, singleton)
 
-import Tester.Dialect
-import Tester.RunSettings
+import Tester.Dialect(andAlso, butAlso, CellBox, excludingTo, FlagCell(DontRun, Run), FlagCells(FlagCells), runningTo, ToggleFlag(StackTrace), unbox)
+import Tester.RunSettings(cellsToSettings, Settings(Settings))
 
 tests = testGroup "Test settings DSL" [
    testCells "Simple run"                 (Run 2)                                                          (singleton 2)                                      False
@@ -34,7 +34,7 @@ tests = testGroup "Test settings DSL" [
  , testCells "Bringing it all back home"  (Run 22 `andAlso` 10 `runningTo` 15 `butAlso` 11 `excludingTo` 14 `butAlso` Run 20 `andAlso` StackTrace `andAlso` Run 5 `andAlso` DontRun 6 `butAlso` Run 6) (fromList [5, 10, 15, 20, 22]) True
  ]
 
-testCells :: (CellBox b) => String -> b -> Set Int -> Bool -> API.Test
+testCells :: (CellBox b) => String -> b -> Set Int -> Bool -> Test
 testCells desc box numSet isStackTracing = testCase desc assertion
   where
     cells     = FlagCells (unbox box)
