@@ -36,6 +36,6 @@ tests = testGroup "Test settings DSL" [
 testCells :: (CellBox b) => String -> b -> Set Int -> Bool -> TestTree
 testCells desc box numSet isStackTracing = testCase desc assertion
   where
-    cells     = FlagCells (unbox box)
+    cells     = FlagCells $ unbox box
     settings  = Settings numSet isStackTracing
     assertion = cellsToSettings cells @?= settings

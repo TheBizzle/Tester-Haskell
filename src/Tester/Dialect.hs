@@ -33,7 +33,7 @@ instance CellBox FlagCell where
   unbox cell = [cell]
 
 instance CellBox ToggleFlag where
-  unbox flag = unbox (ToggleCell flag)
+  unbox flag = unbox $ ToggleCell flag
 
 -- Example: [DontRun 0, Run 1, DontRun 2, Run 2, Run 3, DontRun 5, StackTrace]
 instance Ord FlagCell where

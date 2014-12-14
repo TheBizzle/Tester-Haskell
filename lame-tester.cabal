@@ -1,5 +1,5 @@
 Name:                lame-tester
-Version:             1.2
+Version:             1.2.1
 Cabal-version:       >=1.16.0
 License:             BSD3
 License-File:        LICENSE.txt
@@ -37,6 +37,6 @@ test-suite tests
   build-depends:
     base        >= 4.6 && < 5,
     containers  >= 0.5,
-    lame-tester >= 1.1,
+    lame-tester >= 1.2,
     tasty       >= 0.10,
     tasty-hunit >= 0.9

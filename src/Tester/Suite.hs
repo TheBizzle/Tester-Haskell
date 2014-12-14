@@ -39,7 +39,7 @@ instance Monoid TestResult where
   mappend _                  _                  = mempty
 
 runTests :: FlagCells -> (Suite a b c) -> [TestResult]
-runTests c s@(Suite _ _ failsToStr _) = fmap (resultToTR failsToStr) (generateResults c s)
+runTests c s@(Suite _ _ failsToStr _) = fmap (resultToTR failsToStr) $ generateResults c s
 
 unsafeRunTests :: FlagCells -> (Suite a b c) -> [TestResult]
 unsafeRunTests c s@(Suite _ _ failsToStr succToStr) = seq (unsafePerformIO evilIO) testResults
@@ -51,7 +51,7 @@ unsafeRunTests c s@(Suite _ _ failsToStr succToStr) = seq (unsafePerformIO evilI
 
 generateResults :: FlagCells -> (Suite a b c) -> [Result b c]
 generateResults cells (Suite testMap runTest _ _) =
-  cells |> (cellsToSettings >>> testNums >>> Set.toList >>> (fmap ((testMap!) >>> runTest)))
+  cells |> (cellsToSettings >>> testNums >>> Set.toList >>> (fmap $ (testMap!) >>> runTest))
 
 resultToTR :: (NonEmpty a -> String)-> Result a b -> TestResult
-resultToTR fToStr = bifoldMap (\nel -> TestFailure $ fToStr nel) (const TestSuccess)
+resultToTR fToStr = bifoldMap (fToStr >>> TestFailure) $ const TestSuccess
