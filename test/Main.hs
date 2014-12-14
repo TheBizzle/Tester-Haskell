@@ -1,7 +1,7 @@
 module Main where
 
+import Test.Tasty(defaultMain)
+
 import qualified UnitTests
 
-import Test.Framework.Runners.Console (defaultMain)
-
-main = defaultMain $ [UnitTests.tests]
+main = defaultMain UnitTests.tests
