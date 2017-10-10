@@ -1,0 +1,7 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- .
+extra-deps:
+- bizzlelude-1.0.3
+resolver: nightly-2017-02-25
