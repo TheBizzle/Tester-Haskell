@@ -1,9 +1,9 @@
 module Tester.RunSettings(Settings(..), cellsToSettings) where
 
-import Control.Arrow((>>>))
+import Bizzlelude
 
 import Data.List(sort)
-import Data.Set(empty, insert, Set)
+import Data.Set(empty, insert)
 
 import Tester.Dialect(CellBox, FlagCell(DontRun, Run, ToggleCell), ToggleFlag(StackTrace), unbox)
 
@@ -12,8 +12,6 @@ data Settings
     testNums       :: Set Int,
     isStackTracing :: Bool
   } deriving (Eq, Show)
-
-a |> f = f a
 
 cellsToSettings :: (CellBox x) => x -> Settings
 cellsToSettings cellBox = foldr constructSettings baseSettings optimizedCells

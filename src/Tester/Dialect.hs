@@ -1,5 +1,7 @@
 module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), andAlso, butAlso, excludingTo, runningTo) where
 
+import Bizzlelude
+
 data ToggleFlag
   = StackTrace deriving (Eq, Show)
 
@@ -20,7 +22,7 @@ excludingTo :: Int -> Int -> FlagCells
 excludingTo x y = FlagCells $ fmap DontRun [x..y]
 
 andAlso, butAlso :: (CellBox a, CellBox b) => a -> b -> FlagCells
-andAlso x y = FlagCells $ (unbox x) ++ (unbox y)
+andAlso x y = FlagCells $ (unbox x) <> (unbox y)
 butAlso = andAlso
 
 class CellBox x where

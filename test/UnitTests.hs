@@ -1,8 +1,8 @@
 module UnitTests where
 
-import Control.Arrow((>>>))
+import Bizzlelude
 
-import Data.Set(empty, fromList, insert, Set, singleton)
+import Data.Set(empty, fromList, insert, singleton)
 
 import Test.Tasty(testGroup, TestTree)
 import Test.Tasty.HUnit((@?=), testCase)
