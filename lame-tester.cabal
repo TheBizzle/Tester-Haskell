@@ -24,7 +24,7 @@ library
     bifunctors >= 4.1,
     containers >= 0.5,
     semigroups >= 0.9,
-    validation >= 0.3
+    validation >= 0.3 && < 0.6
   GHC-Options:
     -Wall
     -fno-warn-name-shadowing
