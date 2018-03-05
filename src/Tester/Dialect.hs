@@ -1,7 +1,5 @@
 module Tester.Dialect(CellBox(..), FlagCell(..), FlagCells(..), ToggleFlag(..), andAlso, butAlso, excludingTo, runningTo) where
 
-import Bizzlelude
-
 data ToggleFlag
   = StackTrace deriving (Eq, Show)
 

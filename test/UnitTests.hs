@@ -1,6 +1,4 @@
-module UnitTests where
-
-import Bizzlelude
+module UnitTests(tests) where
 
 import Data.Set(empty, fromList, insert, singleton)
 
@@ -33,8 +31,8 @@ tests = testGroup "Test settings DSL" [
  , testCells "Bringing it all back home"  (Run 22 `andAlso` 10 `runningTo` 15 `butAlso` 11 `excludingTo` 14 `butAlso` Run 20 `andAlso` StackTrace `andAlso` Run 5 `andAlso` DontRun 6 `butAlso` Run 6) (fromList [5, 10, 15, 20, 22]) True
  ]
 
-testCells :: (CellBox b) => String -> b -> Set Int -> Bool -> TestTree
-testCells desc box numSet isStackTracing = testCase desc assertion
+testCells :: (CellBox b) => Text -> b -> Set Int -> Bool -> TestTree
+testCells desc box numSet isStackTracing = testCase (asString desc) assertion
   where
     cells     = FlagCells $ unbox box
     settings  = Settings numSet isStackTracing

@@ -1,7 +1,5 @@
 module Tester.RunSettings(Settings(..), cellsToSettings) where
 
-import Bizzlelude
-
 import Data.List(sort)
 import Data.Set(empty, insert)
 
@@ -36,4 +34,4 @@ optimize = sort >>> foldr f []
 
 data OptCell
   = OStackTrace
-  | ORun { num :: Int }
+  | ORun Int
